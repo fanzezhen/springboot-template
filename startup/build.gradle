@@ -1,0 +1,30 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+jar {
+    enabled = true
+}
+
+mainClassName = "com.github.fanzezhen.template.startup.StartupApplication"
+bootJar {
+    enabled = true
+}
+
+dependencies {
+    compile "mysql:mysql-connector-java:${project.mysqlVersion}"
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+def env = 'env' in project ? project['env'] : 'dev'
+try {
+    env = project['env']
+    println("获取到'env'参数: " + env)
+} catch (Exception ignored) {
+    println("未获取到'env'参数， 使用默认参数: " + env)
+}
+processResources {
+    filter ReplaceTokens, tokens: [env: env]
+}
