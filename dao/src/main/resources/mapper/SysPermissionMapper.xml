@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.fanzezhen.template.dao.SysPermissionDao">
+    <sql id="selectAll">
+        select sp.id,
+               sp.pid,
+               sp.icon,
+               sp.name,
+               sp.status,
+               sp.operation_url,
+               sp.type,
+               sp.order_num,
+               sp.del_flag,
+               sp.create_user_id,
+               sp.update_user_id,
+               sp.create_time,
+               sp.update_time
+        from sys_permission sp
+    </sql>
+    <select id="listByRoleIds" parameterType="java.util.Collection"
+            resultType="com.github.fanzezhen.template.pojo.entry.SysPermission">
+        <include refid="selectAll"/>
+        where sp.id in (
+        select permission_id from sys_role_permission where role_id in
+        <foreach collection="collection" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+    </select>
+</mapper>

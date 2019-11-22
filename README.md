@@ -6,24 +6,6 @@
     
 problems:
 
-    1. 在启动时遇到Logging内存溢出
-        报错信息：
-            （Exception in thread "main" java.lang.StackOverflowError）
-        解决：
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <exclusions><!-- 去掉默认配置 -->
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-logging</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>logback-classic</artifactId>
-                    </exclusion>
-                </exclusions>
-                <version>${spring-boot-starter-web.version}</version>
-            </dependency>
+    1. 
 
 

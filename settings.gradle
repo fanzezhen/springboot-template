@@ -5,4 +5,10 @@ pluginManagement {
 }
 rootProject.name = 'springboot-template'
 include 'startup'
+include 'web'
+include 'common'
+include 'service'
+include 'pojo'
+include 'dao'
+include 'startupcas'
 

@@ -1,0 +1,33 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'application'
+
+jar {
+    enabled = true
+}
+
+mainClassName = "com.github.fanzezhen.template.startupcas.StartupApplication"
+bootJar {
+    enabled = true
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: project.springBootVersion
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.2.1.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.1.RELEASE'
+    compile "mysql:mysql-connector-java:${project.mysqlVersion}"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+
+    implementation 'org.springframework.boot:spring-boot-starter:' + project.springBootVersion
+    compile project(":common")
+    compile project(":pojo")
+    compile project(":dao")
+    compile project(":service")
+    compile project(":web")
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:' + project.springBootVersion
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [env: project['env']]
+}

@@ -1,0 +1,7 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    compile group: 'com.github.fanzezhen', name: 'common', version: project.fanzezhenVersion
+}
