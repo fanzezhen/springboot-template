@@ -1,7 +1,9 @@
 package com.github.fanzezhen.template.common.constant;
 
 public class CommonConstant extends com.github.fanzezhen.common.constant.CommonConstant{
-    public static final String LOGIN_ADDRESS = "/login";
+    public static final String HOME_ADDRESS = "/hello";
+    public static final String LOGIN_ADDRESS = "/oauth/login";
+    public static final String LOGIN_FAILED_MESSAGE = "登录失败！";
     public static final String ADMIN_ADDRESS_PATTERN = "/admin/**";
     public static final String OAUTH_ADDRESS_PATTERN = "/oauth/**";
     public static final String DEFAULT_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";

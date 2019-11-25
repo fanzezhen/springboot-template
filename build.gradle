@@ -68,6 +68,9 @@ subprojects {
         compile group: 'org.springframework', name: 'spring-beans', version: '5.2.1.RELEASE'
         compile group: 'org.springframework.security', name: 'spring-security-cas', version: '5.2.1.RELEASE'
         compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.2.1.RELEASE'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: project.springBootVersion
+        // 验证码
+        compile group: 'org.springframework.social', name: 'spring-social-config', version: '1.1.6.RELEASE'
         compile group: 'com.baomidou', name: 'mybatis-plus', version: '3.2.0'
         compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.2.0'
         compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.2.0'

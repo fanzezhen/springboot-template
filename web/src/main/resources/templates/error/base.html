@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="baseHead(title, cssPaths, jsPaths)">
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title th:text="${title + '错误提示页'}"></title>
+
+  <link rel="stylesheet" type="text/css" th:each="cssPath,status:${#strings.setSplit(cssPaths,',')}"
+        th:href="@{${'/static/css/'+cssPath}}"/>
+  <script th:each="jsPath,status:${#strings.setSplit(jsPaths,',')}" th:src="@{${'/static/js/'+jsPath}}"></script>
+
+</head>
+<body>
+
+</body>
+</html>

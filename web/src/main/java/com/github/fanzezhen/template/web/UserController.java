@@ -3,19 +3,22 @@ package com.github.fanzezhen.template.web;
 import com.github.fanzezhen.template.common.annotation.LogParameter;
 import com.github.fanzezhen.template.pojo.model.JsonResult;
 import com.github.fanzezhen.template.service.SysUserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
     @Resource
     private SysUserService sysUserService;
+
     @LogParameter
     @GetMapping("/log")
     public String getLog(@RequestParam String param) {
@@ -33,4 +36,9 @@ public class UserController extends BaseController {
         jsonResult.setData(data);
         return jsonResult;
     }
+
+//    @PostMapping("/login")
+//    public JsonResult login(String username){
+//        return createJsonResult();
+//    }
 }

@@ -1,10 +1,12 @@
 package com.github.fanzezhen.template.startup.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fanzezhen.template.common.constant.CommonConstant;
 import com.github.fanzezhen.template.common.enums.MemoryEnum;
 import com.github.fanzezhen.template.common.enums.RoleEnum;
 import com.github.fanzezhen.template.common.enums.exception.CommonBizExceptionEnum;
 import com.github.fanzezhen.template.service.SysUserService;
+import com.github.fanzezhen.template.startup.captcha.ValidateCodeFilter;
 import com.github.fanzezhen.template.startup.interceptor.MyFilterSecurityInterceptor;
 import com.github.fanzezhen.template.startup.session.ExpiredSessionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -54,6 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
+
+    @Resource
+    private ValidateCodeFilter validateCodeFilter;
 
     /**
      * 向AuthenticationManager添加Provider
@@ -145,13 +151,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()//禁用 csrf 功能
                 .authorizeRequests()//限定签名成功的请求
-                .antMatchers("/login").permitAll() //登录页面不限定
                 .antMatchers("/admin/**") //对admin下的接口 需要ADMIN权限
                 .hasAnyAuthority(RoleEnum.RoleTypeEnum.ADMIN.getCode(), RoleEnum.RoleTypeEnum.SPECIAL_ADMIN.getCode())
                 .antMatchers("/oauth/**").permitAll()//不拦截 oauth 开放的资源
+                .antMatchers("/static/**").permitAll()//不拦截静态资源
                 .anyRequest().authenticated()//其他没有限定的请求，登录后才允许访问
                 .and()
-                .formLogin()//使用 spring security 默认登录页面
+                .formLogin().loginPage(CommonConstant.LOGIN_ADDRESS).loginProcessingUrl("/login").permitAll()//使用 spring security 默认登录页面
                 .successHandler(authenticationSuccessHandler)   //登陆成功后的操作
                 .failureHandler(authenticationFailHandler) //登录失败处理
                 .and().logout().permitAll() //注销行为任意访问
@@ -168,6 +174,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ;
 //        http.cors();//添加cors支持跨域
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);   //验证码校验
         http.sessionManagement().maximumSessions(1).expiredUrl("/security/login");        //防止多处登录
     }
 }

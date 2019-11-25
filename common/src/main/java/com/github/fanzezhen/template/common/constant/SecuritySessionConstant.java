@@ -1,6 +1,7 @@
 package com.github.fanzezhen.template.common.constant;
 
 public class SecuritySessionConstant {
+    public final static String SESSION_KEY_IMAGE_CODE = "SESSION_KEY_IMAGE_CODE";
 
     // 用户对应在session中key
     public static final String AUTHENTICATION_SESSION_KEY = "SECURITY_USER_ATTR";

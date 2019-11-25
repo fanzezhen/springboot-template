@@ -1,6 +1,7 @@
 package com.github.fanzezhen.template.startup.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fanzezhen.template.common.constant.CommonConstant;
 import com.github.fanzezhen.template.common.constant.ResultTypeConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -35,7 +36,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(map));
         } else {
-            super.setDefaultTargetUrl("/welcome"); // 设置默认登陆成功的跳转地址
+            super.setDefaultTargetUrl(CommonConstant.HOME_ADDRESS); // 设置默认登陆成功的跳转地址
             super.onAuthenticationSuccess(request, response, authentication);
         }
     }
