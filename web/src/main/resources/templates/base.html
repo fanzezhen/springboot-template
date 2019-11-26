@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:fragment="baseHead(title)">
+<head th:fragment="baseHead(title, cssPaths, jsPaths)">
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -11,16 +11,24 @@
   <link rel="shortcut icon" href="/static/images/icon/smile-orange.png"/>
   <link rel="bookmark" href="/static/images/icon/smile-orange.png"/>
   <link rel="stylesheet" href="/static/css/font.css">
-  <link rel="stylesheet" href="/static/css/login.css">
   <link rel="stylesheet" href="/static/css/xadmin.css">
-  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<!--  <script src="/static/lib/layui/layui.js" charset="utf-8"></script>-->
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
   <script src="/static/lib/layui/layui.all.js" charset="utf-8"></script>
+  <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="/static/js/xadmin.js"></script>
   <script src="/static/js/common.js" charset="utf-8"></script>
   <!--[if lt IE 9]>
   <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
   <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <link rel="stylesheet" type="text/css" th:each="cssPath,status:${#strings.setSplit(cssPaths,',')}"
+        th:href="@{${'/static/css/'+cssPath}}"/>
+  <script th:each="jsPath,status:${#strings.setSplit(jsPaths,',')}" th:src="@{${'/static/js/'+jsPath}}"></script>
+  <script>
+      // 是否开启刷新记忆tab功能
+      var is_remember = false;
+  </script>
 </head>
 <body>
 

@@ -1,5 +1,6 @@
 package com.github.fanzezhen.template.startupcas.config;
 
+import com.github.fanzezhen.template.common.enums.RoleEnum;
 import com.github.fanzezhen.template.service.SysUserService;
 import com.github.fanzezhen.template.startupcas.interceptor.MyFilterSecurityInterceptor;
 import org.jasig.cas.client.session.SingleSignOutFilter;
@@ -149,6 +150,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .xssProtection()
                 .block(true)
         ;
+        http.csrf().ignoringAntMatchers("/api/**");
 
         http
                 .headers()
@@ -160,14 +162,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .xssProtection();
 
-        http.authorizeRequests()//配置安全策略
-                .antMatchers("/hello").authenticated()//hello请求需要验证
-                .antMatchers("/login/**").authenticated()//login下请求需要验证
+        http
+                .logout().permitAll()//定义logout不需要验证
                 .and()
-                .logout()
-                .permitAll()//定义logout不需要验证
+                .authorizeRequests()//配置安全策略
+                .antMatchers("/admin/**")
+                .hasAnyAuthority(RoleEnum.RoleTypeEnum.ADMIN.getCode(), RoleEnum.RoleTypeEnum.SPECIAL_ADMIN.getCode())
+                .antMatchers("/oauth/**").permitAll()//不拦截 oauth 开放的资源
+                .antMatchers("/static/**").permitAll()//不拦截静态资源
+                .anyRequest().authenticated()//其他没有限定的请求，登录后才允许访问
                 .and()
-                .formLogin();//使用form表单登录
+                ;
 
         http.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
                 .and()
@@ -175,7 +180,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
                 .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);        //权限控制
-        http.csrf().ignoringAntMatchers("/api/**");
     }
 
 }

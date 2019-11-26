@@ -5,6 +5,7 @@ import com.github.fanzezhen.template.pojo.model.ImageCode;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,21 +23,19 @@ import java.util.Random;
 
 @Controller
 @RequestMapping("/oauth")
-public class OAuthController extends BaseController {
+public class OAuthController {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
 
     @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView mv = new ModelAndView();
-        Enumeration paramNames = getRequest().getParameterNames();
+    public String login(ModelMap modelMap, HttpServletRequest request) {
+        Enumeration paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
             String paramName = (String) paramNames.nextElement();
-            mv.addObject(paramName, getRequest().getParameter(paramName));
+            modelMap.addAttribute(paramName, request.getParameter(paramName));
         }
-        mv.setViewName("login");
-        return mv;
+        return "login";
     }
 
     @GetMapping("/code/image")

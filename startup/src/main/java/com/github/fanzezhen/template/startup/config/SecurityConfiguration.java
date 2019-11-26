@@ -132,26 +132,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic()    //启用http 基础验证
-                //未登录时，进行json格式的提示
-                .authenticationEntryPoint((request, response, authException) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    PrintWriter out = response.getWriter();
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("code", CommonBizExceptionEnum.BizExceptionEnum.NOT_LOGIN.getCode());
-                    map.put("message", CommonBizExceptionEnum.BizExceptionEnum.NOT_LOGIN.getMessage());
-                    out.write(objectMapper.writeValueAsString(map));
-                    out.flush();
-                    out.close();
-                })
+                .httpBasic()    //启用http 基础验证)
                 .and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)
-                .and()
-                .cors() //添加cors支持跨域
-                .and()
-                .csrf().disable()//禁用 csrf 功能
+                .and().cors() //添加cors支持跨域
+                .and().csrf().disable()//禁用 csrf 功能
                 .authorizeRequests()//限定签名成功的请求
-                .antMatchers("/admin/**") //对admin下的接口 需要ADMIN权限
+                .antMatchers("/admin/**")
                 .hasAnyAuthority(RoleEnum.RoleTypeEnum.ADMIN.getCode(), RoleEnum.RoleTypeEnum.SPECIAL_ADMIN.getCode())
                 .antMatchers("/oauth/**").permitAll()//不拦截 oauth 开放的资源
                 .antMatchers("/static/**").permitAll()//不拦截静态资源
