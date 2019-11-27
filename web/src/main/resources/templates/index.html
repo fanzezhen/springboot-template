@@ -1,6 +1,6 @@
 <!doctype html>
-<html class="x-admin-sm" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:include="base :: baseHead('首页','','')"></head>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base :: baseHead('首页','','index')"></head>
 <body class="index">
 <!-- 顶部开始 -->
 <div class="container">
@@ -335,14 +335,9 @@
 <style id="theme_style"></style>
 <!-- 右侧主体结束 -->
 <!-- 中部结束 -->
-<script>//百度统计可去掉
-var _hmt = _hmt || [];
-(function () {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-})();</script>
+<script th:inline="javascript">
+  initNav([[${permissionList}]]);
+</script>
 </body>
 
 </html>

@@ -1,15 +1,18 @@
 const homeUrl = "/hello";
+const CommonEnum = {
+    STATUS: {0: "启用", 1: "禁用"}
+};
 
 function alert_info(info) {
     top.layer.msg(info, {icon: 6});
 }
 
 function alert_success(info) {
-    top.layer.msg(info, {icon: 1});
+    top.layer.msg(JSON.stringify(info), {icon: 1});
 }
 
 function alert_error(info) {
-    top.layer.msg(info, {icon: 2});
+    top.layer.msg(JSON.stringify(info), {icon: 2});
 }
 
 function alert_confirm(tip, ensure) {
@@ -43,6 +46,11 @@ function mainPage() {
  * @param contentType
  */
 function ajaxCommit(type, init, url, data, success, error, contentType) {
+    const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function (e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
     $.ajax({
         async: true,
         type: type,
@@ -99,4 +107,19 @@ function getUrlParamByName(name) {
         }
     }
     return false;
+}
+
+function paged(pageId, current, pages) {
+    const $page = $("#" + pageId);
+    $page.html("<a class=\"prev\" href=\"\">&lt;&lt;</a>");
+    for (let i = -2; i <= 2; i += 1) {
+        const index = current + i;
+        if (index > 0 && index <= pages) {
+            if (index !== current)
+                $page.append("<a class=\"num\" href=\"\">" + index + "</a>");
+            else
+                $page.append("<span class=\"current\">" + index + "</span>");
+        }
+    }
+    $page.append("<a class=\"next\" href=\"\">&gt;&gt;</a>");
 }

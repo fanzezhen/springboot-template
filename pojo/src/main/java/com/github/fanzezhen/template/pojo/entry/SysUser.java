@@ -20,6 +20,7 @@ public class SysUser extends BaseAloneEntry {
     @Column(nullable = false)
     private String password;
     private String nickname;
+    private Integer sex;
     private String avatar;  //头像
     private String email;
     private String phone;

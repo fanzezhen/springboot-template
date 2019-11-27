@@ -26,5 +26,6 @@
             #{item}
         </foreach>
         )
+        order by sp.order_num
     </select>
 </mapper>

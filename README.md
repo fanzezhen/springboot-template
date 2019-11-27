@@ -6,6 +6,17 @@
     
 problems:
 
-    1. 
-
+    1. post请求返回403
+    经排查属于csrf相关问题，解决方法：
+        在html头部添加
+              <meta name="_csrf" th:content="${_csrf.token}"/>
+              <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        form中添加 th:action
+            <form action="#" th:action="@{/URL} + '?' + ${_csrf.parameterName} + '=' + ${_csrf.token}" ...>
+        ajax请求前添加
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
 

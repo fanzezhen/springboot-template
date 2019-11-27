@@ -1,6 +1,8 @@
 package com.github.fanzezhen.template.web;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.fanzezhen.template.common.annotation.LogParameter;
+import com.github.fanzezhen.template.pojo.entry.SysUser;
 import com.github.fanzezhen.template.pojo.model.JsonResult;
 import com.github.fanzezhen.template.service.SysUserService;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class UserController extends BaseController {
 
     @LogParameter
     @GetMapping("/log")
+    @ResponseBody
     public String getLog(@RequestParam String param) {
         return "Hello Spring Security Log";
     }
@@ -37,8 +40,18 @@ public class UserController extends BaseController {
         return jsonResult;
     }
 
-//    @PostMapping("/login")
-//    public JsonResult login(String username){
-//        return createJsonResult();
-//    }
+    @GetMapping("/list")
+    public String list(ModelMap modelMap){
+        Page<SysUser> page = new Page<>(1,5);  // 查询第1页，每页返回5条
+        modelMap.addAttribute("page", sysUserService.page(page));
+        return "user/member-list";
+    }
+
+    @PostMapping("/list/page")
+    @ResponseBody
+    public Page<SysUser> listPage(){
+        Page<SysUser> page = new Page<>(1,5);  // 查询第1页，每页返回5条
+        sysUserService.page(page);
+        return page;
+    }
 }

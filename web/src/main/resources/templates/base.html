@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:fragment="baseHead(title, cssPaths, jsPaths)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="baseHead(title, cssNames, jsNames)">
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -8,12 +8,15 @@
   <meta name="viewport"
         content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   <link rel="shortcut icon" href="/static/images/icon/smile-orange.png"/>
   <link rel="bookmark" href="/static/images/icon/smile-orange.png"/>
   <link rel="stylesheet" href="/static/css/font.css">
   <link rel="stylesheet" href="/static/css/xadmin.css">
   <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-  <script src="/static/lib/layui/layui.all.js" charset="utf-8"></script>
+<!--  <script src="/static/lib/layui/layui.all.js" charset="utf-8"></script>-->
   <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
   <script type="text/javascript" src="/static/js/xadmin.js"></script>
   <script src="/static/js/common.js" charset="utf-8"></script>
@@ -22,15 +25,25 @@
   <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <link rel="stylesheet" type="text/css" th:each="cssPath,status:${#strings.setSplit(cssPaths,',')}"
-        th:href="@{${'/static/css/'+cssPath}}"/>
-  <script th:each="jsPath,status:${#strings.setSplit(jsPaths,',')}" th:src="@{${'/static/js/'+jsPath}}"></script>
+  <link rel="stylesheet" type="text/css" th:each="cssName,status:${#strings.setSplit(cssNames,',')}"
+        th:href="@{${'/static/css/'+cssName+'.css'}}"/>
+  <script th:each="jsName,status:${#strings.setSplit(jsNames,',')}" th:src="@{${'/static/js/'+jsName+'.js'}}"></script>
   <script>
       // 是否开启刷新记忆tab功能
       var is_remember = false;
   </script>
 </head>
 <body>
-
+<div class="x-nav" th:fragment="baseNav(names)">
+          <span class="layui-breadcrumb">
+            <a href="/">首页</a>
+              <a th:each="name,nameStat:${#strings.setSplit(names,',')}" th:text="${nameStat.last? '':name}">
+                <cite th:if="${nameStat.last}" th:text="name"></cite>
+            </a>
+          </span>
+  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()"
+     title="刷新">
+    <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
 </body>
 </html>
