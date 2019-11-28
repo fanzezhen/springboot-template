@@ -1,6 +1,9 @@
 const homeUrl = "/hello";
 const CommonEnum = {
-    STATUS: {0: "启用", 1: "禁用"}
+    STATUS: {
+        0: {name: "启用", html: "<span class=\"layui-btn layui-btn-normal layui-btn-mini\">启用</span>"},
+        1: {name: "禁用", html: "<span class=\"layui-btn layui-btn-danger layui-btn-mini\">禁用</span>"}
+    }
 };
 
 function alert_info(info) {
@@ -56,6 +59,7 @@ function ajaxCommit(type, init, url, data, success, error, contentType) {
         type: type,
         url: url,
         data: data,
+        //x-www-form-urlencoded
         contentType: contentType,
         beforeSend: function () {
             if (!init)

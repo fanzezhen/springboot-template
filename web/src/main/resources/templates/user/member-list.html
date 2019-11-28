@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html class="x-admin-sm"
-      xmlns:th="http://www.thymeleaf.org" lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+<html lang="en" class="x-admin-sm"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorator="user/base"
 >
-<head>
+<head th:replace="user/base :: userBaseHead('用户列表', '', 'user/member-list')">
   <title>用户列表</title>
+  <script type="text/javascript" src="/static/js/user/member-list.js"></script>
 </head>
 <body>
 <cite layout:fragment="navigation">用户列表</cite>
@@ -14,24 +15,27 @@
     <div class="layui-col-md12">
       <div class="layui-card">
         <div class="layui-card-body ">
-          <form class="layui-form layui-col-space5">
+          <form class="layui-form layui-col-space5" lay-filter="searchForm">
             <div class="layui-inline layui-show-xs-block">
-              <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
+              <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start"
+                     th:value="${start}">
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
+              <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end" th:value="${end}">
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+              <input type="text" id="username" name="username" placeholder="请输入用户名" autocomplete="off"
+                     class="layui-input"
+                     th:value="${username}">
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+              <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
             </div>
           </form>
         </div>
         <div class="layui-card-header">
           <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-          <button class="layui-btn" onclick="xadmin.open('添加用户','/user/add',600,400)"><i
+          <button class="layui-btn" onclick="xadmin.open('添加用户', '/user/add', 700, 500)"><i
               class="layui-icon"></i>添加
           </button>
         </div>
@@ -47,6 +51,7 @@
               <th>昵称</th>
               <th>性别</th>
               <th>状态</th>
+              <th>注册时间</th>
               <th>操作</th>
             </tr>
             </thead>
@@ -82,14 +87,15 @@
         </div>
         <div class="layui-card-body ">
           <div class="page">
-            <div id="page">
-              <a class="prev" href="">&lt;&lt;</a>
-              <a class="num" href="">1</a>
-              <span class="current">2</span>
-              <a class="num" href="">3</a>
-              <a class="num" href="">489</a>
-              <a class="next" href="">&gt;&gt;</a>
-            </div>
+            <div id="ym"></div>
+            <!--            <div id="page">-->
+            <!--              <a class="prev" href="">&lt;&lt;</a>-->
+            <!--              <a class="num" href="">1</a>-->
+            <!--              <span class="current">2</span>-->
+            <!--              <a class="num" href="">3</a>-->
+            <!--              <a class="num" href="">489</a>-->
+            <!--              <a class="next" href="">&gt;&gt;</a>-->
+            <!--            </div>-->
           </div>
         </div>
       </div>
@@ -97,10 +103,8 @@
   </div>
 </div>
 
-<th:block layout:fragment="bottomscriptblock">
+<th:block layout:fragment="bottomScriptBlock">
   <script>
-      searchPage();
-
       layui.use(['laydate', 'form'], function () {
           var laydate = layui.laydate;
           var form = layui.form;

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head th:include="base :: baseHead('用户管理', '', 'user/user')">
-  <title></title>
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head th:fragment="userBaseHead(title, cssNames, jsNames)"
+      th:include="base :: baseHead(${title}, ${cssNames}, 'user/user' + ${jsNames == ''? '':','+jsNames})"
+>
+  <title>用户管理</title>
 </head>
 <body>
 <div class="x-nav">
@@ -22,7 +24,7 @@
     <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
 </div>
 <div class="layui-fluid" layout:fragment="fluid"></div>
-<th:block layout:fragment="bottomscriptblock">这里是预留给子页单独引用js用的,th:block Thymeleaf不会渲染,放代码块最合适
+<th:block layout:fragment="bottomScriptBlock">这里是预留给子页单独引用js用的,th:block Thymeleaf不会渲染,放代码块最合适
   　　　　th:block is a mere attribute container that allows template developers to specify whichever attributes they want.
   　　　　Thymeleaf will execute these attributes and then simply make the block dissapear without a trace.
 </th:block>

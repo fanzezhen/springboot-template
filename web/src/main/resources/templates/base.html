@@ -15,6 +15,7 @@
   <link rel="bookmark" href="/static/images/icon/smile-orange.png"/>
   <link rel="stylesheet" href="/static/css/font.css">
   <link rel="stylesheet" href="/static/css/xadmin.css">
+  <script type="text/javascript" src="/static/js/util.js"></script>
   <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <!--  <script src="/static/lib/layui/layui.all.js" charset="utf-8"></script>-->
   <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
@@ -30,7 +31,7 @@
   <script th:each="jsName,status:${#strings.setSplit(jsNames,',')}" th:src="@{${'/static/js/'+jsName+'.js'}}"></script>
   <script>
       // 是否开启刷新记忆tab功能
-      var is_remember = false;
+      let is_remember = true;
   </script>
 </head>
 <body>

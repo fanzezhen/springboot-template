@@ -5,4 +5,5 @@ plugins {
 dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.1'
     compile group: 'com.github.fanzezhen', name: 'pojo', version: project.fanzezhenVersion
+    compile project(":common")
 }
