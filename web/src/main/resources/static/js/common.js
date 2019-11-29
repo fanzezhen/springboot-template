@@ -1,11 +1,3 @@
-const homeUrl = "/hello";
-const CommonEnum = {
-    STATUS: {
-        0: {name: "启用", html: "<span class=\"layui-btn layui-btn-normal layui-btn-mini\">启用</span>"},
-        1: {name: "禁用", html: "<span class=\"layui-btn layui-btn-danger layui-btn-mini\">禁用</span>"}
-    }
-};
-
 function alert_info(info) {
     top.layer.msg(info, {icon: 6});
 }
@@ -35,34 +27,34 @@ function redirect(url, isNew) {
 }
 
 function mainPage() {
-    window.location.href = homeUrl
+    window.location.href = CommonConstant.API.HOME.URL
 }
 
 /**
  * 公共ajax提交
- * @param type
- * @param init
  * @param url
+ * @param type
  * @param data
+ * @param contentType
  * @param success
  * @param error
- * @param contentType
+ * @param isAsync
+ * @param isShowLoading
  */
-function ajaxCommit(type, init, url, data, success, error, contentType) {
+function ajaxCommit(url, type, data, contentType, success, error, isAsync = true, isShowLoading = true) {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
     $(document).ajaxSend(function (e, xhr, options) {
         xhr.setRequestHeader(header, token);
     });
     $.ajax({
-        async: true,
+        async: isAsync,
         type: type,
         url: url,
         data: data,
-        //x-www-form-urlencoded
         contentType: contentType,
         beforeSend: function () {
-            if (!init)
+            if (isShowLoading)
                 top.layer.load(0, {shade: [0.4, '#fff']});
         },
         success: function (result) {
@@ -111,19 +103,4 @@ function getUrlParamByName(name) {
         }
     }
     return false;
-}
-
-function paged(pageId, current, pages) {
-    const $page = $("#" + pageId);
-    $page.html("<a class=\"prev\" href=\"\">&lt;&lt;</a>");
-    for (let i = -2; i <= 2; i += 1) {
-        const index = current + i;
-        if (index > 0 && index <= pages) {
-            if (index !== current)
-                $page.append("<a class=\"num\" href=\"\">" + index + "</a>");
-            else
-                $page.append("<span class=\"current\">" + index + "</span>");
-        }
-    }
-    $page.append("<a class=\"next\" href=\"\">&gt;&gt;</a>");
 }

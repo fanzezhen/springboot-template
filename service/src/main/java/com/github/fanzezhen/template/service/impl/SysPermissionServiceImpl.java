@@ -7,6 +7,7 @@ import com.github.fanzezhen.template.service.SysPermissionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,6 +33,6 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, 
 
     @Override
     public List<SysPermission> listByRoleIds(Collection<Long> roleIds) {
-        return sysPermissionDao.listByRoleIds(roleIds);
+        return (roleIds == null || roleIds.size() <= 0) ? new ArrayList<>() : sysPermissionDao.listByRoleIds(roleIds);
     }
 }

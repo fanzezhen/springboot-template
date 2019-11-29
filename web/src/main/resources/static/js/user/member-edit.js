@@ -9,7 +9,7 @@ layui.use(['form', 'layer', 'jquery'], function () {
                 return '登录名至少得6个字符啊';
             }
         },
-        pass: [/(.+){6,12}$/, '密码必须6到12位'],
+        password: [/(.+){6,12}$/, '密码必须6到12位'],
         rePass: function () {
             if ($('#L_pass').val() !== $('#L_rePass').val()) {
                 return '两次密码不一致';
@@ -17,8 +17,8 @@ layui.use(['form', 'layer', 'jquery'], function () {
         }
     });
 
-    User.successAdd = function () {
-        layer.alert("增加成功", {
+    User.successSave = function () {
+        layer.alert("操作成功！", {
                 icon: 6
             },
             function () {
@@ -32,7 +32,7 @@ layui.use(['form', 'layer', 'jquery'], function () {
 
     //监听提交
     form.on('submit(add)', function (data) {
-        ajaxCommit("post", false, "/user/save", JSON.stringify(data.field), User.successAdd, alert_error, "application/json;charset=utf-8");
+        ajaxCommit(UserConstant.API.SAVE.URL, CommonConstant.AJAX_TYPE.POST, JSON.stringify(data.field), CommonConstant.CONTENT_TYPE.JSON, User.successSave, alert_error);
         return false;
     });
 

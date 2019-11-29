@@ -4,6 +4,7 @@ import com.github.fanzezhen.template.pojo.entry.SysRole;
 import com.github.fanzezhen.template.pojo.entry.SysUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.CredentialsContainer;
@@ -21,6 +22,7 @@ import java.util.function.Function;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
 public class SysUserDetail extends SysUser implements UserDetails, CredentialsContainer {
     private static final Log logger = LogFactory.getLog(SysUserDetail.class);
     private Set<GrantedAuthority> authorities;
@@ -32,6 +34,8 @@ public class SysUserDetail extends SysUser implements UserDetails, CredentialsCo
     private Collection<SysRole> roles;
     private Collection<String> roleNames;
     private Collection<Long> roleIds;
+
+    private String oldPassword;
 
     public SysUserDetail(SysUser sysUser, Collection<? extends GrantedAuthority> authorities) {
         this(true, true, true, true, authorities);
@@ -90,7 +94,7 @@ public class SysUserDetail extends SysUser implements UserDetails, CredentialsCo
         sb.append("AccountNonExpired: ").append(this.accountNonExpired).append("; ");
         sb.append("credentialsNonExpired: ").append(this.credentialsNonExpired).append("; ");
         sb.append("AccountNonLocked: ").append(this.accountNonLocked).append("; ");
-        if (!this.authorities.isEmpty()) {
+        if (this.authorities != null && !this.authorities.isEmpty()) {
             sb.append("Granted Authorities: ");
             boolean first = true;
 

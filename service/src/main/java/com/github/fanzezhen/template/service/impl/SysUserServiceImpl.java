@@ -52,21 +52,19 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
                     grantedAuthorityRoleSet.add("sys_permission_" + sysPermission.getId());
                 }
             }
-        grantedAuthorityRoleSet.addAll(RoleEnum.RoleTypeEnum.queryRoleTypeCodeSetByType(roleTypeSet));
-        //1：此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority 对象。
-        grantedAuthorities = new HashSet<>(AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils.join(grantedAuthorityRoleSet, ',')));
-        SysUserDetail sysUserDetail = new SysUserDetail(sysUser, grantedAuthorities);
-        sysUserDetail.setRoles(sysRoleList);
-        sysUserDetail.setRoleIds(sysRoleIdSet);
-        sysUserDetail.setRoleNames(roleNameSet);
-        return sysUserDetail;
-    } else
+            grantedAuthorityRoleSet.addAll(RoleEnum.RoleTypeEnum.queryRoleTypeCodeSetByType(roleTypeSet));
+            //1：此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority 对象。
+            grantedAuthorities = new HashSet<>(AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils.join(grantedAuthorityRoleSet, ',')));
+            SysUserDetail sysUserDetail = new SysUserDetail(sysUser, grantedAuthorities);
+            sysUserDetail.setRoles(sysRoleList);
+            sysUserDetail.setRoleIds(sysRoleIdSet);
+            sysUserDetail.setRoleNames(roleNameSet);
+            return sysUserDetail;
+        } else {
+            throw new UsernameNotFoundException("user: " + username + " do not exist!");
+        }
 
-    {
-        throw new UsernameNotFoundException("user: " + username + " do not exist!");
     }
-
-}
 
     @Override
     public SysUserDetail loadUserDetails(CasAssertionAuthenticationToken casAssertionAuthenticationToken) throws UsernameNotFoundException {
@@ -83,5 +81,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
     @Override
     public SysUser findByUsername(String username) {
         return sysUserDao.selectOne(new QueryWrapper<SysUser>().eq("username", username));
+    }
+
+    @Override
+    public boolean save(SysUser entity) {
+        if (org.springframework.util.StringUtils.isEmpty(entity.getId())) return super.save(entity);
+        else return super.updateById(entity);
     }
 }
