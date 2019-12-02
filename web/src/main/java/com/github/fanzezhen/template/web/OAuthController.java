@@ -30,9 +30,9 @@ public class OAuthController {
 
     @GetMapping("/login")
     public String login(ModelMap modelMap, HttpServletRequest request) {
-        Enumeration paramNames = request.getParameterNames();
+        Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
-            String paramName = (String) paramNames.nextElement();
+            String paramName = paramNames.nextElement();
             modelMap.addAttribute(paramName, request.getParameter(paramName));
         }
         return "login";

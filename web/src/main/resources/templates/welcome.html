@@ -140,20 +140,16 @@
               <td>Apache/2.4.23 (Win32) OpenSSL/1.0.2j mod_fcgid/2.3.9</td>
             </tr>
             <tr>
-              <th>PHP版本</th>
-              <td>5.6.27</td>
+              <th>JAVA版本</th>
+              <td th:text="${javaVersion}"></td>
             </tr>
             <tr>
-              <th>PHP运行方式</th>
+              <th>JAVA运行方式</th>
               <td>cgi-fcgi</td>
             </tr>
             <tr>
               <th>MYSQL版本</th>
-              <td>5.5.53</td>
-            </tr>
-            <tr>
-              <th>ThinkPHP</th>
-              <td>5.0.18</td>
+              <td>5.7</td>
             </tr>
             <tr>
               <th>上传附件限制</th>
@@ -164,8 +160,10 @@
               <td>30s</td>
             </tr>
             <tr>
-              <th>剩余空间</th>
-              <td>86015.2M</td>
+              <th>硬盘使用量</th>
+              <td th:style="${diskRating>0.8?'color: red;':''}"
+                  th:text="${#numbers.formatDecimal(diskRating*100,1,'COMMA',0,'POINT') + '%'}"
+              ></td>
             </tr>
             </tbody>
           </table>

@@ -64,8 +64,8 @@ public class UserController extends BaseController {
         if (!StringUtils.isEmpty(page.getEndDate())) queryWrapper.le("create_time", page.getEndDate());
         if (!StringUtils.isEmpty(page.getParam().getUsername())) {
             queryWrapper.like("username", page.getParam().getUsername());
-            page.getParam().setUsername(null);
         }
+        page.getParam().setUsername(null);
         queryWrapper.orderByDesc("update_time");
         sysUserService.page(page, queryWrapper);
         return page;
@@ -96,7 +96,7 @@ public class UserController extends BaseController {
 
     @PostMapping("/del/batch")
     @ResponseBody
-    public JsonResult delBatch(@RequestParam(value = "idList") List<Long> idList) {
+    public JsonResult<HashMap<String, String>> delBatch(@RequestParam(value = "idList") List<Long> idList) {
         Collection<SysUser> sysUserList = sysUserService.listByIds(idList);
         for (SysUser sysUser : sysUserList) {
             sysUser.setDelFlag(CommonEnum.DeleteFlagEnum.YES.getCode());

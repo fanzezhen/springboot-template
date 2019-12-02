@@ -1,5 +1,6 @@
 package com.github.fanzezhen.template.web;
 
+import com.github.fanzezhen.util.SysUtil;
 import com.github.fanzezhen.template.service.SysPermissionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +27,8 @@ public class CommonController extends BaseController {
 
     @GetMapping("/welcome")
     public String welcome(ModelMap modelMap) {
+        modelMap.addAttribute("javaVersion", System.getProperty("java.version") + " " + System.getProperty("java.vm.name"));
+        modelMap.addAttribute("diskRating", SysUtil.getDiskRating());
         return "welcome";
     }
 

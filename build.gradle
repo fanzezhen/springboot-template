@@ -79,9 +79,9 @@ subprojects {
         compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.2.0'
         compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.2.0'
         compile group: 'com.github.fanzezhen', name: 'util', version: project.fanzezhenVersion
-        testCompile('org.springframework.boot:spring-boot-starter-test:' + project.springBootVersion)
+        testCompile('org.springframework.boot:spring-boot-starter-test:' + (project.springBootVersion as CharSequence))
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
 
-println("env参数: " + project.env)
+println("env参数: " + (project.env as CharSequence))

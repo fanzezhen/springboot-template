@@ -87,7 +87,7 @@ public abstract class BaseController {
     /**
      * 通用Result
      */
-    protected JsonResult createJsonResult(){
+    protected JsonResult<HashMap<String, String>> createJsonResult(){
         HashMap<String, String> result = new HashMap<>();
         result.put("status", "success");
         return new JsonResult<>(result);
