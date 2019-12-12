@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 public interface SysRoleService extends BaseService<SysRole>{
-    SysRole findById(Long id);
+    SysRole findById(String id);
     SysRole findByName(String name);
-    void deleteById(Long id);
+    void deleteById(String id);
     void delete(SysRole sysRole);
-    void deleteInBatch(List<Long> idList);
+    void deleteInBatch(List<String> idList);
     List<SysRole> findAll();
-    List<SysRole> listByUserId(Long userId);
+    List<SysRole> listByUserId(String userId);
 }

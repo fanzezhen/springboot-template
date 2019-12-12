@@ -1,5 +1,6 @@
 package com.github.fanzezhen.template.pojo.entry;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,13 +9,13 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@Table(name = "sys_permission")
+@TableName("sys_permission")
 public class SysPermission extends BaseAloneEntry {
     private String name;
 
     private String icon;
 
-    private Long pid;
+    private String pid;
 
     private Integer status;
 

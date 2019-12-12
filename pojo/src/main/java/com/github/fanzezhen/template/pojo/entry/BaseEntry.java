@@ -21,11 +21,11 @@ public class BaseEntry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false)
-    private Long id;
+    private String id;
     @Column(name = "create_time")
     private Date createTime;
     @Column(name = "create_user_id")
-    private Long createUserId;
+    private String createUserId;
 
     public void init(BaseEntry baseEntry){
         this.createTime = baseEntry.getCreateTime();

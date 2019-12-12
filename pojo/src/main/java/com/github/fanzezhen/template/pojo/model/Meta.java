@@ -8,5 +8,5 @@ import java.util.List;
 public class Meta{
     private String icon;
     private String title;
-    private List<Long> roles;
+    private List<String> roles;
 }

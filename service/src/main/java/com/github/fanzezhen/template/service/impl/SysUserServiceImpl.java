@@ -37,7 +37,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
             //生成环境是查询数据库获取username的角色用于后续权限判断（如：张三 admin)
             Set<GrantedAuthority> grantedAuthorities;
             Set<String> grantedAuthorityRoleSet = new HashSet<>();
-            Set<Long> sysRoleIdSet = new HashSet<>();
+            Set<String> sysRoleIdSet = new HashSet<>();
             Set<String> roleNameSet = new HashSet<>();
             Set<Integer> roleTypeSet = new HashSet<>();
 

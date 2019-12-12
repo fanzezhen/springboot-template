@@ -1,5 +1,6 @@
 package com.github.fanzezhen.template.pojo.entry;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.fanzezhen.template.pojo.model.SysRoleDetail;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "sys_role")
+@TableName("sys_role")
 public class SysRole extends BaseAloneEntry {
     private String roleName;
     private String description;

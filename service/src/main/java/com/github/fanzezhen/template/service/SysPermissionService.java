@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.List;
 
 public interface SysPermissionService extends BaseService<SysPermission>{
-    SysPermission findById(Long id);
-    List<SysPermission> findByUserId(Long userId);
+    SysPermission findById(String id);
+    List<SysPermission> findByUserId(String userId);
     List<SysPermission> findAll();
-    List<SysPermission> listByRoleIds(Collection<Long> roleIds);
+    List<SysPermission> listByRoleIds(Collection<String> roleIds);
 }

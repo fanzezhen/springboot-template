@@ -33,7 +33,7 @@ public class SysUserDetail extends SysUser implements UserDetails, CredentialsCo
 
     private Collection<SysRole> roles;
     private Collection<String> roleNames;
-    private Collection<Long> roleIds;
+    private Collection<String> roleIds;
 
     private String oldPassword;
 

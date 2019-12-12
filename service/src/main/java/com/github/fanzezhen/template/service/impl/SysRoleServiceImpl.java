@@ -24,7 +24,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRole> imp
     private SysRolePermissionService sysRolePermissionService;
 
     @Override
-    public SysRole findById(Long id) {
+    public SysRole findById(String id) {
         return sysRoleDao.selectById(id);
     }
 
@@ -36,7 +36,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRole> imp
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         sysRoleDao.deleteById(id);
         // todo delete sys_user_role and sys_role_permission
     }
@@ -49,8 +49,8 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRole> imp
 
     @Override
     @Transactional
-    public void deleteInBatch(List<Long> idList) {
-        for (Long id : idList){
+    public void deleteInBatch(List<String> idList) {
+        for (String id : idList){
             deleteById(id);
         }
     }
@@ -61,7 +61,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRole> imp
     }
 
     @Override
-    public List<SysRole> listByUserId(Long userId) {
+    public List<SysRole> listByUserId(String userId) {
         return sysRoleDao.listByUserId(userId);
     }
 }

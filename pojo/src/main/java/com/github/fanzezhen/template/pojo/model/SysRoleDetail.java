@@ -7,16 +7,16 @@ import java.util.List;
 
 @NoArgsConstructor
 public class SysRoleDetail extends SysRole {
-    private Long key;
+    private String key;
     private String name;
 
     private List<Route> routes;
 
-    public Long getKey() {
+    public String getKey() {
         return key;
     }
 
-    public void setKey(Long key) {
+    public void setKey(String key) {
         if (getId() == null){
             setId(key);
         }

@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class SysPermissionDetail extends SysPermission {
-    private List<Long> roleIds;
+    private List<String> roleIds;
 
     public SysPermissionDetail(SysPermission sysPermission) {
         BeanUtils.copyProperties(sysPermission, this);

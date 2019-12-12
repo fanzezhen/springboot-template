@@ -23,6 +23,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 全局异常处理
+ */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 public class DefaultExceptionResolver implements HandlerExceptionResolver {

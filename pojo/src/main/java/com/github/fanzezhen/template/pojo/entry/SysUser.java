@@ -1,5 +1,6 @@
 package com.github.fanzezhen.template.pojo.entry;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "sys_user")
+@TableName("sys_user")
 public class SysUser extends BaseAloneEntry {
     @Column(nullable = false)
     private String username;

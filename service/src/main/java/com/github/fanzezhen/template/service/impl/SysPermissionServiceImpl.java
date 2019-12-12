@@ -17,12 +17,12 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, 
     private SysPermissionDao sysPermissionDao;
 
     @Override
-    public SysPermission findById(Long id) {
+    public SysPermission findById(String id) {
         return sysPermissionDao.selectById(id);
     }
 
     @Override
-    public List<SysPermission> findByUserId(Long userId) {
+    public List<SysPermission> findByUserId(String userId) {
         return null;
     }
 
@@ -32,7 +32,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionDao, 
     }
 
     @Override
-    public List<SysPermission> listByRoleIds(Collection<Long> roleIds) {
+    public List<SysPermission> listByRoleIds(Collection<String> roleIds) {
         return (roleIds == null || roleIds.size() <= 0) ? new ArrayList<>() : sysPermissionDao.listByRoleIds(roleIds);
     }
 }

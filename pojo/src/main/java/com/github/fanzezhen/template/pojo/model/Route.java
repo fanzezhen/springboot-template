@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class Route {
-    private Long permissionId;
+    private String permissionId;
     private String name;
     private String path;
     private String redirect;

@@ -9,6 +9,6 @@ import javax.persistence.Entity;
 @Data
 @Entity
 public class SysUserRole extends BaseEntry {
-    private Long userId;
-    private Long roleId;
+    private String userId;
+    private String roleId;
 }

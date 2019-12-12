@@ -33,7 +33,7 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
 
     @Override
     public void deleteInBatch(Set<SysRolePermission> sysRolePermissionList){
-        Set<Long> idList = new HashSet<>();
+        Set<String> idList = new HashSet<>();
         for (SysRolePermission sysRolePermission : sysRolePermissionList){
             idList.add(sysRolePermission.getId());
         }

@@ -27,7 +27,7 @@ public class BaseAloneEntry extends BaseEntry implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
     @Column(name = "update_user_id")
-    private Long updateUserId;
+    private String updateUserId;
 
     public void init(BaseAloneEntry baseAlonePo){
         this.status = baseAlonePo.getStatus();

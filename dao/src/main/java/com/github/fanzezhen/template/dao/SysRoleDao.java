@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface SysRoleDao extends BaseDao<SysRole> {
-    List<SysRole> listByUserId(Long userId);
+    List<SysRole> listByUserId(String userId);
 }

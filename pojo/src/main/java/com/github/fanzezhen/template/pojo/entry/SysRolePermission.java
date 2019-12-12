@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysRolePermission extends BaseEntry {
-    private Long roleId;
+    private String roleId;
 
-    private Long permissionId;
+    private String permissionId;
 }

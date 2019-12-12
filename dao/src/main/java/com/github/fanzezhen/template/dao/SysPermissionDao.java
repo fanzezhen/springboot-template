@@ -9,5 +9,5 @@ import java.util.List;
 
 @Mapper
 public interface SysPermissionDao extends BaseMapper<SysPermission> {
-    List<SysPermission> listByRoleIds(Collection<Long> roleIds);
+    List<SysPermission> listByRoleIds(Collection<String> roleIds);
 }

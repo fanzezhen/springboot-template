@@ -30,7 +30,7 @@ public class UserController extends BaseController {
     private SysUserService sysUserService;
 
     @RequestMapping("/info")
-    public JsonResult<Object> getLoginUserInfo(@RequestParam(required = false) Long userId) {
+    public JsonResult<Object> getLoginUserInfo(@RequestParam(required = false) String userId) {
         JsonResult<Object> jsonResult = new JsonResult<>();
         if (userId == null) {
             HashMap<String, Object> data = new HashMap<>();
@@ -72,7 +72,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/edit")
-    public String edit(@RequestParam(required = false) Long userId, ModelMap modelMap) {
+    public String edit(@RequestParam(required = false) String userId, ModelMap modelMap) {
         modelMap.addAttribute("sysUser", userId == null ? new SysUser() : sysUserService.getById(userId));
         modelMap.addAttribute("title", userId == null ? "添加用户" : "修改用户");
         return "user/member-edit";
@@ -96,7 +96,7 @@ public class UserController extends BaseController {
 
     @PostMapping("/del/batch")
     @ResponseBody
-    public JsonResult<HashMap<String, String>> delBatch(@RequestParam(value = "idList") List<Long> idList) {
+    public JsonResult<HashMap<String, String>> delBatch(@RequestParam(value = "idList") List<String> idList) {
         Collection<SysUser> sysUserList = sysUserService.listByIds(idList);
         for (SysUser sysUser : sysUserList) {
             sysUser.setDelFlag(CommonEnum.DeleteFlagEnum.YES.getCode());
@@ -106,7 +106,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/change-password")
-    public String changePassword(@RequestParam Long userId, ModelMap modelMap) {
+    public String changePassword(@RequestParam String userId, ModelMap modelMap) {
         modelMap.addAttribute("sysUser", sysUserService.getById(userId));
         return "user/member-password";
     }

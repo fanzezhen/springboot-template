@@ -50,7 +50,7 @@ public class AdminController extends BaseController {
     }
 
     @GetMapping("/role/edit")
-    public String roleEdit(@RequestParam(required = false) Long roleId, ModelMap modelMap) {
+    public String roleEdit(@RequestParam(required = false) String roleId, ModelMap modelMap) {
         modelMap.addAttribute("sysRole", roleId == null ? new SysRole() : sysRoleService.getById(roleId));
         modelMap.addAttribute("title", roleId == null ? "添加角色" : "修改角色");
         return "admin/admin-edit";
@@ -65,7 +65,7 @@ public class AdminController extends BaseController {
 
     @PostMapping("/role/del/batch")
     @ResponseBody
-    public JsonResult<HashMap<String, String>> roleDelBatch(@RequestParam(value = "idList") List<Long> idList) {
+    public JsonResult<HashMap<String, String>> roleDelBatch(@RequestParam(value = "idList") List<String> idList) {
         Collection<SysRole> sysRoleCollection = sysRoleService.listByIds(idList);
         for (SysRole sysRole : sysRoleCollection) {
             sysRole.setDelFlag(CommonEnum.DeleteFlagEnum.YES.getCode());

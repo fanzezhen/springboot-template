@@ -16,7 +16,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleDao, SysU
 
     @Override
     public void deleteInBatch(Set<SysUserRole> sysUserRoleSet) {
-        Set<Long> idList = new HashSet<>();
+        Set<String> idList = new HashSet<>();
         for (SysUserRole sysUserRole:sysUserRoleSet) {
             idList.add(sysUserRole.getId());
         }

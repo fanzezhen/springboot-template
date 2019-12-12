@@ -14,7 +14,7 @@
                sr.update_user_id
         from sys_role sr
     </sql>
-    <select id="listByUserId" parameterType="java.lang.Long"
+    <select id="listByUserId" parameterType="java.lang.String"
             resultType="com.github.fanzezhen.template.pojo.entry.SysRole">
         <include refid="PoColumn" />
         where id in (
