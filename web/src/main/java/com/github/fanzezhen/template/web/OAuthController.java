@@ -1,6 +1,6 @@
 package com.github.fanzezhen.template.web;
 
-import com.github.fanzezhen.template.common.constant.SecuritySessionConstant;
+import com.github.fanzezhen.template.common.constant.SecurityConstant;
 import com.github.fanzezhen.template.pojo.model.ImageCode;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +40,7 @@ public class OAuthController {
     @GetMapping("/code/image")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ImageCode imageCode = createImageCode();
-        sessionStrategy.setAttribute(new ServletWebRequest(request), SecuritySessionConstant.SESSION_KEY_IMAGE_CODE, imageCode);
+        sessionStrategy.setAttribute(new ServletWebRequest(request), SecurityConstant.SESSION_KEY_CAPTCHA, imageCode);
         ImageIO.write(imageCode.getImage(), "jpeg", response.getOutputStream());
     }
 

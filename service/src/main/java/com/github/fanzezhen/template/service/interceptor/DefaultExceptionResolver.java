@@ -1,6 +1,7 @@
 package com.github.fanzezhen.template.service.interceptor;
 
 import com.github.fanzezhen.common.enums.exception.CommonBizExceptionEnum;
+import com.github.fanzezhen.template.common.constant.ResultTypeConstant;
 import com.github.fanzezhen.template.common.exception.ServiceException;
 import com.github.fanzezhen.util.HttpUtil;
 import org.slf4j.Logger;
@@ -78,6 +79,9 @@ public class DefaultExceptionResolver implements HandlerExceptionResolver {
         LOGGER.error("请求" + request.getRequestURI() + "发生异常", ex);
         response.setStatus(errorStatus);
         ModelAndView modelAndView;
+        if (ResultTypeConstant.IS_RETURN_JSON) {
+            return jsonResponse(request, ex);
+        }
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // 检查是否存在ResponseBody注解

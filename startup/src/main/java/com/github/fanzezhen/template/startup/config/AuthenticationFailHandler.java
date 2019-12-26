@@ -3,7 +3,11 @@ package com.github.fanzezhen.template.startup.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fanzezhen.template.common.constant.CommonConstant;
 import com.github.fanzezhen.template.common.constant.ResultTypeConstant;
+import com.github.fanzezhen.template.common.enums.SysLogEnum;
 import com.github.fanzezhen.template.common.enums.exception.CommonBizExceptionEnum;
+import com.github.fanzezhen.template.pojo.entry.SysLoginLog;
+import com.github.fanzezhen.template.service.SysLoginLogService;
+import com.github.fanzezhen.template.service.thread.LogThread;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -25,11 +29,16 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
     @Resource
     private ObjectMapper objectMapper;
 
+    @Resource
+    private SysLoginLogService sysLoginLogService;
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {
-        log.info("登录失败:" + exception.getMessage());
-        log.info("username=>" + request.getParameter("username"));
+        CommonConstant.SYS_EXECUTOR.execute(new LogThread<>(sysLoginLogService, new SysLoginLog("",
+                request.getParameter("username"), SysLogEnum.LoginLogTypeEnum.LOGIN_FAILED.getCode(),
+                exception.getMessage()), new String[]{"登录失败:" + exception.getMessage(),
+                "username=>" + request.getParameter("username")}));
 
         if (ResultTypeConstant.LOGIN_FAILED_RETURN_JSON) {
             Map<String, Object> map = new HashMap<>();

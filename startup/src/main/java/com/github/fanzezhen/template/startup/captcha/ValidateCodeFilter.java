@@ -1,6 +1,6 @@
 package com.github.fanzezhen.template.startup.captcha;
 
-import com.github.fanzezhen.template.common.constant.SecuritySessionConstant;
+import com.github.fanzezhen.template.common.constant.SecurityConstant;
 import com.github.fanzezhen.template.common.exception.ValidateCodeException;
 import com.github.fanzezhen.template.pojo.model.ImageCode;
 import com.github.fanzezhen.template.startup.config.AuthenticationFailHandler;
@@ -46,7 +46,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     }
 
     private void validateCode(ServletWebRequest servletWebRequest) throws ServletRequestBindingException, ValidateCodeException {
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(servletWebRequest, SecuritySessionConstant.SESSION_KEY_IMAGE_CODE);
+        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(servletWebRequest, SecurityConstant.SESSION_KEY_CAPTCHA);
         String codeInRequest = ServletRequestUtils.getStringParameter(servletWebRequest.getRequest(), "imageCode");
 
         if (StringUtils.isBlank(codeInRequest)) {
@@ -56,13 +56,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             throw new ValidateCodeException("验证码不存在！");
         }
         if (codeInSession.isExpire()) {
-            sessionStrategy.removeAttribute(servletWebRequest, SecuritySessionConstant.SESSION_KEY_IMAGE_CODE);
+            sessionStrategy.removeAttribute(servletWebRequest, SecurityConstant.SESSION_KEY_CAPTCHA);
             throw new ValidateCodeException("验证码已过期！");
         }
         if (!StringUtils.equalsIgnoreCase(codeInSession.getCode(), codeInRequest)) {
             throw new ValidateCodeException("验证码不正确！");
         }
-        sessionStrategy.removeAttribute(servletWebRequest, SecuritySessionConstant.SESSION_KEY_IMAGE_CODE);
+        sessionStrategy.removeAttribute(servletWebRequest, SecurityConstant.SESSION_KEY_CAPTCHA);
 
     }
 }

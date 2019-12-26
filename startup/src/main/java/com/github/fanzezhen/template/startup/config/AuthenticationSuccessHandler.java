@@ -3,6 +3,11 @@ package com.github.fanzezhen.template.startup.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fanzezhen.template.common.constant.CommonConstant;
 import com.github.fanzezhen.template.common.constant.ResultTypeConstant;
+import com.github.fanzezhen.template.common.enums.SysLogEnum;
+import com.github.fanzezhen.template.pojo.entry.SysLoginLog;
+import com.github.fanzezhen.template.pojo.util.SysSecurityUtil;
+import com.github.fanzezhen.template.service.SysLoginLogService;
+import com.github.fanzezhen.template.service.thread.LogThread;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -23,10 +28,15 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     @Resource
     private ObjectMapper objectMapper;
 
+    @Resource
+    private SysLoginLogService sysLoginLogService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("登录成功");
-        log.info("username=>" + request.getParameter("username"));
+        CommonConstant.SYS_EXECUTOR.execute(new LogThread<>(sysLoginLogService, new SysLoginLog(
+                SysSecurityUtil.getSysUserDetail().getId(), request.getParameter("username"),
+                SysLogEnum.LoginLogTypeEnum.LOGIN_SUCCEED.getCode(), ""),
+                new String[]{"登录成功: username=>" + request.getParameter("username")}));
 
         if (ResultTypeConstant.LOGIN_SUCCESS_RETURN_JSON) {
             Map<String, Object> map = new HashMap<>();

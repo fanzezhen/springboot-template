@@ -1,5 +1,6 @@
 package com.github.fanzezhen.template.web;
 
+import com.github.fanzezhen.template.pojo.util.SysSecurityUtil;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -76,7 +77,7 @@ public class ControllerAspect extends BaseController {
         for (Object arg : args) {
             if (arg instanceof ModelMap) {
                 ModelMap modelMap = (ModelMap) arg;
-                modelMap.addAttribute("loginUser", getSysUserDetail());
+                modelMap.addAttribute("loginUser", SysSecurityUtil.getSysUserDetail());
             }
         }
     }
